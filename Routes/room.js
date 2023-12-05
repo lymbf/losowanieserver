@@ -19,6 +19,8 @@ Router.get('/', async (req, res) => {
     res.status(200).send({data: rooms})
 })
 
+
+
 Router.post('/', async (req, res) => {
     let {name} = req.body;
     if (!name) return res.status(400).send({error: true, message: 'incorrect or missing name of the room'});

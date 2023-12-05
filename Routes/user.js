@@ -1,6 +1,7 @@
 const User = require('../Schemas/user');
 const mongoose = require('mongoose')
 const {ObjectId} = require("mongodb");
+const {Types} = require("mongoose");
 const Router = require('express').Router();
 
 Router.get('/', (req, res) => {
@@ -15,6 +16,15 @@ Router.get('/', (req, res) => {
         })
     }
 
+})
+
+Router.get('/users/:roomId', async (req,res)=>{
+    const {roomId} = req.params;
+    let users = await User.find({
+        'rooms._id': new Types.ObjectId(roomId)
+    })
+    if(!users) return res.status(400).send('sth went wrong');
+    res.status(200).send({data: users})
 })
 
 Router.post('/:userId/rooms', (req, res) => {
